@@ -8,13 +8,13 @@ const Footer = () => {
     <footer className="text-white body-font bg-gray-400">
       <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
-          <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-orange-500">
+          <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-black">
             <img
               //   src={Logo}
               alt="logo"
               className="w-16 h-16 rounded-full bg-white p-2"
             />
-            <span className="text-3xl pl-2">aThSaa Book-Store</span>
+            <span className="text-xl pl-2">aThSaa Book-Store</span>
           </div>
           <p className="mt-2 text-sm text-black">
             Read what you want, when you want…!
