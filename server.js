@@ -25,3 +25,5 @@ app.use(express.json());
 app.listen(PORT, () => {
   console.log(`Server is up and running in port ${PORT}`);
 });
+
+app.use("/api/auth", require("./BACKEND/routes/auth"));
