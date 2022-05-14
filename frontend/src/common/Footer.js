@@ -22,7 +22,7 @@ const Footer = () => {
         </div>
         <div className="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-black tracking-widest text-sm mb-3">
+            <h2 className="title-font font-medium text-sky-900 tracking-widest text-sm mb-3">
               SOLUTIONS
             </h2>
             <nav className="list-none mb-10 mt-4 space-y-4">
@@ -41,7 +41,7 @@ const Footer = () => {
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-black tracking-widest text-sm mb-3">
+            <h2 className="title-font font-medium text-sky-900 tracking-widest text-sm mb-3">
               SUPPORT
             </h2>
             <nav className="list-none mb-10 mt-4 space-y-4">
@@ -62,7 +62,7 @@ const Footer = () => {
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-black tracking-widest text-sm mb-3">
+            <h2 className="title-font font-medium text-sky-900 tracking-widest text-sm mb-3">
               COMPANY
             </h2>
             <nav className="list-none mb-10 mt-4 space-y-4">
@@ -81,7 +81,7 @@ const Footer = () => {
             </nav>
           </div>
           <div className="lg:w-1/4 md:w-1/2 w-full px-4">
-            <h2 className="title-font font-medium text-black tracking-widest text-sm mb-3">
+            <h2 className="title-font font-medium text-sky-900 tracking-widest text-sm mb-3">
               LEGAL
             </h2>
             <nav className="list-none mb-10 mt-4 space-y-4">

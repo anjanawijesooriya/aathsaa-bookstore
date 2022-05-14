@@ -1,6 +1,7 @@
 import { Button } from "antd";
 import React, { useState } from "react";
 import { LoginOutlined } from "@ant-design/icons";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   let Links = [
@@ -44,10 +45,12 @@ const NavBar = () => {
               </a>
             </li>
           ))}
-          <button className="inline-flex items-center bg-red-600 text-white border-0 py-1 px-3 focus:outline-none hover:bg-blue-400 rounded-full text-base mt-4 md:mt-0 translate-x-6">
-            <LoginOutlined />
-            &nbsp;Login
-          </button>
+          <Link to="/login">
+            <button className="inline-flex items-center bg-red-600 text-white border-0 py-1 px-3 focus:outline-none hover:bg-blue-400 rounded-full text-base mt-4 md:mt-0 translate-x-6">
+              <LoginOutlined />
+              &nbsp;Login
+            </button>
+          </Link>
         </ul>
       </div>
     </div>
