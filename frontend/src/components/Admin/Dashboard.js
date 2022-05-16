@@ -11,12 +11,16 @@ import "antd/dist/antd.css";
 import "./Dashboard.css";
 
 import CarouselView from "./CarouselView";
+import NavBar from "./NavBar";
 
 //book components
 import Books from "./Books/Books";
+import AddBooks from "./Books/AddBooks";
+import AllBooks from "./Books/AllBooks";
 
 //user components
 import Users from "./Users/Users";
+import AllUsers from "./Users/AllUsers";
 
 import Logo from "../../assets/LOGO new.png";
 
@@ -34,9 +38,12 @@ const Dashboard = () => {
 
   //book
   const queryBook = param.get("_optBook");
+  const queryAddBooks = param.get("_book");
+  const queryAllBooks = param.get("_book");
 
   //user
   const queryUser = param.get("_optUser");
+  const queryAllUsers = param.get("_user");
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
@@ -159,9 +166,11 @@ const Dashboard = () => {
           style={{ padding: 0, textAlign: "center" }}
         >
           <h1 id="header" style={{ fontFamily: "serif", fontSize: "20px" }}>
-            {queryBook === "book"
+            {queryBook === "book" ||
+            queryAddBooks === "addbook" ||
+            queryAllBooks === "allbook"
               ? "Book Management"
-              : queryUser === "user"
+              : queryUser === "user" || queryAllUsers === "alluser"
               ? "User Management"
               : "Dashboard"}
           </h1>
@@ -175,11 +184,16 @@ const Dashboard = () => {
           {location.pathname ===
             `/admin-dashboard/${localStorage.getItem("username")}` &&
             !queryBook &&
-            !queryUser && <CarouselView />}
+            !queryUser &&
+            !queryAddBooks &&
+            !queryAllUsers && <CarouselView />}
           {/* Book */}
-          {queryBook === "book" && <Books />}
+          {queryBook === "book" && [<NavBar />, <Books />]}
+          {queryAddBooks === "addbook" && [<NavBar />, <AddBooks />]}
+          {queryAllBooks === "allbook" && [<NavBar />, <AllBooks />]}
           {/* User */}
-          {queryUser === "user" && <Users />}
+          {queryUser === "user" && [<NavBar />, <Users />]}
+          {queryAllUsers === "alluser" && [<NavBar />, <AllUsers />]}
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Copyright © {date.getFullYear()} aaThSaa Book-Store

@@ -20,7 +20,7 @@ const Users = () => {
             <Spin size="large" />
           </div>
         ) : (
-          <div>
+          <div className=" mt-2">
             <>
               <img src={users} alt="users" className=" w-full h-full" />
             </>
