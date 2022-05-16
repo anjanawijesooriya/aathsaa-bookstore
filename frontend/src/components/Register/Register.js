@@ -11,7 +11,7 @@ import {
   Spin,
 } from "antd";
 import "./Register.scss";
-// import Logo from "../../assets/logo.png";
+import Logo from "../../assets/LOGO new.png";
 import LoginLogo from "../../assets/Login & Register/register.jpg";
 
 import { LoginOutlined, LoadingOutlined } from "@ant-design/icons";
@@ -107,7 +107,7 @@ const Register = () => {
           style={{ padding: 0, textAlign: "center" }}
         >
           <center>
-            {/* <img src={Logo} alt="logo" style={{ maxWidth: "100px" }} /> */}
+            <img src={Logo} alt="logo" style={{ maxWidth: "100px" }} />
             <h1 id="header" style={{ fontFamily: "serif", fontSize: "50px" }}>
               aaThSaa{" "}
             </h1>

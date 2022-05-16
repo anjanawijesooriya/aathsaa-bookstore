@@ -2,7 +2,7 @@ import { Button, Divider, Form, Input, Layout, notification, Spin } from "antd";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import Logo from "../../assets/logo.png";
+import Logo from "../../assets/LOGO new.png";
 import "./Login.scss";
 
 const { Header } = Layout;

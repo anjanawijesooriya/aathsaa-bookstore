@@ -11,7 +11,7 @@ import {
   Spin,
 } from "antd";
 import "./Login.scss";
-// import Logo from "../../assets/logo.png";
+import Logo from "../../assets/LOGO new.png";
 import LoginLogo from "../../assets/Login & Register/login.jpg";
 
 import { LoginOutlined, LoadingOutlined } from "@ant-design/icons";
@@ -97,7 +97,7 @@ const Login = () => {
         >
           <center>
             <Link to={"/"}>
-              {/* <img src={Logo} alt="logo" style={{ maxWidth: "100px" }} /> */}
+              <img src={Logo} alt="logo" style={{ maxWidth: "100px" }} />
             </Link>
             <h1 id="header" style={{ fontFamily: "serif", fontSize: "50px" }}>
               aaThSaa{" "}

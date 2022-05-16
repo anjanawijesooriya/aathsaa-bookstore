@@ -1,5 +1,5 @@
 import React from "react";
-// import Logo from "../assets/logo.png";
+import Logo from "../assets/LOGO new.png";
 
 const Footer = () => {
   const date = new Date();
@@ -10,9 +10,9 @@ const Footer = () => {
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
           <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-black">
             <img
-              //   src={Logo}
+              src={Logo}
               alt="logo"
-              className="w-16 h-16 rounded-full bg-white p-2"
+              className="w-16 h-16 rounded-fulle p-2"
             />
             <span className="text-xl pl-2">aThSaa Book-Store</span>
           </div>
