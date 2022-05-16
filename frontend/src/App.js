@@ -14,6 +14,7 @@ import PageNotFound from "./routes/PageNotFound";
 import Login from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import ResetPassword from "./components/Login/ResetPassword";
+import AdminDashboard from "./components/Admin/Dashboard";
 
 const App = () => {
   return (
@@ -27,6 +28,14 @@ const App = () => {
           <Route
             path="/passwordreset/:resetToken"
             element={<ResetPassword />}
+          />
+          <Route
+            path="/admin-dashboard/:username"
+            element={
+              <PrivateRoute>
+                <AdminDashboard />
+              </PrivateRoute>
+            }
           />
         </Routes>
       </Router>
