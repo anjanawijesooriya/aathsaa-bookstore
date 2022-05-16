@@ -30,6 +30,8 @@ const Dashboard = () => {
 
   const param = new URLSearchParams(search);
 
+  console.log(location.pathname);
+
   //book
   const queryBook = param.get("_optBook");
 
@@ -111,7 +113,7 @@ const Dashboard = () => {
               history(
                 `/admin-dashboard/${localStorage.getItem(
                   "username"
-                )}?optBook=book`
+                )}?_optBook=book`
               );
             }}
           >
@@ -126,7 +128,7 @@ const Dashboard = () => {
               history(
                 `/admin-dashboard/${localStorage.getItem(
                   "username"
-                )}?optUser=user`
+                )}?_optUser=user`
               );
             }}
           >
@@ -158,7 +160,7 @@ const Dashboard = () => {
         >
           <h1 id="header" style={{ fontFamily: "serif", fontSize: "20px" }}>
             {queryBook === "book"
-              ? "Product Management"
+              ? "Book Management"
               : queryUser === "user"
               ? "User Management"
               : "Dashboard"}
@@ -175,7 +177,8 @@ const Dashboard = () => {
             !queryBook &&
             !queryUser && <CarouselView />}
           {/* Book */}
-          {queryBook === "product" && <Books />}
+          {queryBook === "book" && <Books />}
+          {/* User */}
           {queryUser === "user" && <Users />}
         </Content>
         <Footer style={{ textAlign: "center" }}>
