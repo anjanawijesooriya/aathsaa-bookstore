@@ -17,6 +17,7 @@ import NavBar from "./NavBar";
 import Books from "./Books/Books";
 import AddBooks from "./Books/AddBooks";
 import AllBooks from "./Books/AllBooks";
+import EditBooks from "./Books/EditBooks";
 
 //user components
 import Users from "./Users/Users";
@@ -40,6 +41,7 @@ const Dashboard = () => {
   const queryBook = param.get("_optBook");
   const queryAddBooks = param.get("_book");
   const queryAllBooks = param.get("_book");
+  const queryEditBooks = param.get("_book");
 
   //user
   const queryUser = param.get("_optUser");
@@ -168,7 +170,8 @@ const Dashboard = () => {
           <h1 id="header" style={{ fontFamily: "serif", fontSize: "20px" }}>
             {queryBook === "book" ||
             queryAddBooks === "addbook" ||
-            queryAllBooks === "allbook"
+            queryAllBooks === "allbook" ||
+            queryEditBooks === "edit"
               ? "Book Management"
               : queryUser === "user" || queryAllUsers === "alluser"
               ? "User Management"
@@ -186,11 +189,13 @@ const Dashboard = () => {
             !queryBook &&
             !queryUser &&
             !queryAddBooks &&
-            !queryAllUsers && <CarouselView />}
+            !queryAllUsers &&
+            !queryEditBooks && <CarouselView />}
           {/* Book */}
           {queryBook === "book" && [<NavBar />, <Books />]}
           {queryAddBooks === "addbook" && [<NavBar />, <AddBooks />]}
           {queryAllBooks === "allbook" && [<NavBar />, <AllBooks />]}
+          {queryEditBooks === "edit" && [<NavBar />, <EditBooks />]}
           {/* User */}
           {queryUser === "user" && [<NavBar />, <Users />]}
           {queryAllUsers === "alluser" && [<NavBar />, <AllUsers />]}

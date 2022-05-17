@@ -7,15 +7,18 @@ import {
   Spin,
   Tooltip,
   notification,
-  DatePicker,
   Select,
+  DatePicker,
 } from "antd";
 import {
   FileDoneOutlined,
   InfoCircleOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
+
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import moment from "moment";
 
 const layout = {
   labelCol: {
@@ -34,7 +37,7 @@ const tailLayout = {
 
 const { Option } = Select;
 
-const AddBooks = () => {
+const EditBooks = () => {
   const [loader, setLoader] = useState(false);
   const [bookName, setBookName] = useState("");
   const [author, setAuthor] = useState("");
@@ -43,20 +46,44 @@ const AddBooks = () => {
   const [addedDate, setAddedDate] = useState("");
   const [image, setImage] = useState("");
   const [bookUrl, setBookUrl] = useState("");
-  const likes = -1;
-  const downloads = -1;
 
-  //additional
-  const [loading, setLoading] = useState(false);
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const id = params.get("_id");
+  const history = useNavigate();
+
+  const [loading, setLoading] = useState(false); //additional
   const [error, setError] = useState(false);
 
   useEffect(() => {
     setTimeout(() => {
       setLoader(!loader);
-    }, 5000);
+    }, 5000);(async () => {
+      await axios
+        .get(`/books/get/${id}`)
+        .then((res) => {
+          form.setFieldsValue({
+            bookName: res.data.bookName,
+            author: res.data.author,
+            bookDesc: res.data.bookDesc,
+            bookCategory: res.data.bookCategory,
+            addedDate: res.data.addedDate,
+            image: res.data.image,
+            bookUrl: res.data.bookUrl,
+          });
+          setBookName(res.data.bookName);
+          setAuthor(res.data.author);
+          setBookDesc(res.data.bookDesc);
+          setBookCategory(res.data.bookCategory);
+          setAddedDate(res.data.addedDate);
+          setImage(res.data.image);
+          setBookUrl(res.data.bookUrl);
+        })
+        .catch(() => null);
+    })();
   }, []);
 
-  const bookHandler = async (placement) => {
+  const bookHandlerUpdate = async (placement) => {
     // create handler for saving data to the db
     setLoading(true);
 
@@ -68,9 +95,9 @@ const AddBooks = () => {
     };
 
     try {
-      await axios.post(
+      await axios.put(
         //use axios API
-        "/books/create",
+        `/books/update/${id}`,
         {
           bookName,
           author,
@@ -79,18 +106,15 @@ const AddBooks = () => {
           addedDate,
           image,
           bookUrl,
-          likes,
-          downloads,
         },
         config
       );
-
       setTimeout(() => {
         //set a time out
         setLoading(false);
         notification.info({
           message: `Notification`,
-          description: "Successfully added the book details 😘",
+          description: "Successfully updated the book details 😘",
           placement,
         });
         form.resetFields();
@@ -106,16 +130,12 @@ const AddBooks = () => {
       setLoading(false);
     }
   };
+
   const [form] = Form.useForm();
 
   const onChangeDate = (type) => {
-    Date(setAddedDate(type));
+    setAddedDate(type);
   };
-
-  const onReset = () => {
-    form.resetFields();
-  };
-
   return (
     <>
       {loader === false ? (
@@ -128,7 +148,7 @@ const AddBooks = () => {
             {...layout}
             form={form}
             name="control-hooks"
-            onFinish={() => bookHandler("top")}
+            onFinish={() => bookHandlerUpdate("top")}
           >
             <center>
               {error && <span style={{ color: "red" }}>{error}</span>}
@@ -220,6 +240,7 @@ const AddBooks = () => {
                 placeholder="Select Book Catregory"
                 style={{ width: "50%" }}
                 onChange={(e) => setBookCategory(e)}
+                defaultValue={bookCategory}
               >
                 <Option value="Novels">Novels</Option>
                 <Option value="Programming">Programming</Option>
@@ -231,7 +252,6 @@ const AddBooks = () => {
             </Form.Item>
 
             <Form.Item
-              name="addedDate"
               label="Book added date"
               rules={[
                 {
@@ -239,7 +259,7 @@ const AddBooks = () => {
                 },
               ]}
             >
-              <DatePicker style={{ width: 200 }} onChange={onChangeDate} />
+              <DatePicker defaultValue={moment(Date(addedDate))} style={{ width: 200 }} onChange={onChangeDate} required />
             </Form.Item>
 
             <Form.Item
@@ -296,7 +316,7 @@ const AddBooks = () => {
               <Button type="primary" htmlType="submit">
                 {loading ? (
                   <>
-                    <Spin indicator={<LoadingOutlined />} /> Book adding in
+                    <Spin indicator={<LoadingOutlined />} /> Book updating in
                     Progess...
                   </>
                 ) : (
@@ -304,9 +324,6 @@ const AddBooks = () => {
                 )}
               </Button>{" "}
               &nbsp;&nbsp; &nbsp;&nbsp;
-              <Button htmlType="button" onClick={onReset}>
-                Reset
-              </Button>
             </Form.Item>
           </Form>
         </div>
@@ -315,4 +332,4 @@ const AddBooks = () => {
   );
 };
 
-export default AddBooks;
+export default EditBooks;

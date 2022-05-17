@@ -16,12 +16,14 @@ const NavBar = () => {
   const queryBook = param.get("_optBook");
   const queryAddBooks = param.get("_book");
   const queryAllBooks = param.get("_book");
+  const queryEditBooks = param.get("_book");
 
   return (
     <div className=" mx-auto bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-16">
       {queryBook === "book" ||
       queryAddBooks === "addbook" ||
-      queryAllBooks === "allbook" ? (
+      queryAllBooks === "allbook" ||
+      queryEditBooks === "edit" ? (
         <>
           <div className="text-4xl float-left translate-x-4">
             <HomeTwoTone
