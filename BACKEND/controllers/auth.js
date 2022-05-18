@@ -66,6 +66,20 @@ exports.login = async (req, res) => {
   }
 };
 
+exports.getUsers = async (req, res) => {
+  await User.find()
+    .then((user) => res.json(user))
+    .catch((error) => res.status(500).json({ success: false, error: error }));
+};
+
+exports.deleteUser = async (req, res) => {
+  const { id } = req.params;
+
+  await User.findByIdAndDelete(id)
+    .then(() => res.json({ message: "Successfully Deleted" }))
+    .catch((error) => res.status(500).json({ success: false, error: error }));
+};
+
 exports.forgotpassword = async (req, res) => {
   //controller for forgot password
   const { email } = req.body;
