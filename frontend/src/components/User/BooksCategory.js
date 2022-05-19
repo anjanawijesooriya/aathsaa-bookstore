@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Spin, Result, Button } from "antd";
 import { FileExcelTwoTone } from "@ant-design/icons";
@@ -9,14 +9,15 @@ import "antd/dist/antd.css";
 const BooksCategory = () => {
   const [data, setData] = useState([]);
   const [loader, setLoader] = useState(false);
-  const [loading, setLoading] = useState(false);
 
   const search = window.location.search;
   const param = new URLSearchParams(search);
+  const id = param.get("_id");
 
   //   let [filteredDataCategory, setFilteredDataCategory] = useState([]);
 
   const location = useLocation();
+  const history = useNavigate();
 
   useEffect(() => {
     (async () => {
@@ -111,6 +112,14 @@ const BooksCategory = () => {
       : null
   );
 
+  // const ViewBookHandler = () => {
+  //   history(
+  //     `/user-dashboard/${localStorage.getItem(
+  //       "username"
+  //     )}?_optView=book&_id${id}`
+  //   );
+  // };
+
   return (
     <>
       {loader === false ? (
@@ -154,7 +163,19 @@ const BooksCategory = () => {
                   <p className="mt-1 text-sm text-gray-500">
                     {moment(i.addedDate).format("DD MMM YYYY")}
                   </p>
-                  <Button type="primary" shape="round">View Book</Button>
+                  <Button
+                    type="primary"
+                    shape="round"
+                    onClick={() =>
+                      history(
+                        `/user-dashboard/${localStorage.getItem(
+                          "username"
+                        )}?_optView=book&_id=${i._id}`
+                      )
+                    }
+                  >
+                    View Book
+                  </Button>
                 </center>
               </div>
             </div>

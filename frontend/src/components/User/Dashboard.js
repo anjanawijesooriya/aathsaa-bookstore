@@ -6,9 +6,10 @@ import { BookOutlined, LogoutOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./Dashboard.css";
 
+//Books
 import Books from "./Books";
-
 import BooksCategory from "./BooksCategory";
+import ViewBook from "./ViewBook";
 
 import Logo from "../../assets/LOGO new.png";
 
@@ -30,6 +31,8 @@ const Dashboard = () => {
   const queryALs = param.get("_optALs");
   const queryKids = param.get("_optKids");
   const queryShorts = param.get("_optShortS");
+
+  const queryViewBook = param.get("_optView");
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
@@ -82,7 +85,7 @@ const Dashboard = () => {
     window.location.reload();
   };
   return (
-    <Layout style={{ minHeight: "100vh" }}>
+    <Layout style={{ minHeight: "100vh", marginTop: "74px" }}>
       <Sider
         collapsible
         collapsed={collapsed}
@@ -248,6 +251,8 @@ const Dashboard = () => {
               ? "Kids Stories"
               : queryShorts === "shorts"
               ? "Short Stories"
+              : queryViewBook === "book"
+              ? "View Book"
               : "Dashboard"}
           </h1>
         </Header>
@@ -266,7 +271,8 @@ const Dashboard = () => {
             !queryOLs &&
             !queryALs &&
             !queryKids &&
-            !queryShorts }
+            !queryShorts &&
+            !queryViewBook }
           {/* Book Category */}
           {queryNovels === "novels" && <BooksCategory />}
           {queryProgramming === "programming" && <BooksCategory />}
@@ -274,6 +280,7 @@ const Dashboard = () => {
           {queryALs === "als" && <BooksCategory />}
           {queryKids === "kids" && <BooksCategory />}
           {queryShorts === "shorts" && <BooksCategory />}
+          {queryViewBook === "book" && <ViewBook />}
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Copyright © {date.getFullYear()} aaThSaa Book-Store

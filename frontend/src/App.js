@@ -30,12 +30,13 @@ const App = () => {
             path="/passwordreset/:resetToken"
             element={<ResetPassword />}
           />
-          
+
           {/* User */}
           <Route
             path="/user-dashboard/:username"
             element={
               <PrivateRoute>
+                <NavBar />
                 <UserDashboard />
               </PrivateRoute>
             }
