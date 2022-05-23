@@ -28,3 +28,4 @@ app.listen(PORT, () => {
 
 app.use("/api/auth", require("./BACKEND/routes/auth"));
 app.use("/books", require("./BACKEND/routes/books"));
+app.use("/comments", require("./BACKEND/routes/comments"));
