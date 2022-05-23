@@ -23,21 +23,27 @@ const NavBar = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     localStorage.removeItem("type");
+    localStorage.removeItem("id");
     history("/login");
   };
 
   const content = (
     <div style={{ width: "2px" }}>
       <div>
-        <Button>Profile</Button>
-      </div>
-      <div className=" mt-1">
-        <Button>Downloads</Button>
+        <Button
+          onClick={() =>
+            history(
+              `/user-dashboard/${localStorage.getItem(
+                "username"
+              )}/?_optProfile=my`
+            )
+          }
+        >
+          Profile
+        </Button>
       </div>
       <div className="mt-1">
-        <Button onClick={logoutHandler}>
-          Logout
-        </Button>
+        <Button onClick={logoutHandler}>Logout</Button>
       </div>
     </div>
   );

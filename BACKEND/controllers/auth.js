@@ -72,6 +72,27 @@ exports.getUsers = async (req, res) => {
     .catch((error) => res.status(500).json({ success: false, error: error }));
 };
 
+exports.getUser = async (req, res) => {
+  const { id } = req.params;
+
+  await User.findById(id)
+    .then((user) => res.json(user))
+    .catch((error) => res.status(500).json({ success: false, error: error }));
+};
+
+exports.editUser = async (req, res) => {
+  const { id } = req.params;
+
+  const { username, email } = req.body;
+
+  await User.findByIdAndUpdate(id, {
+    username,
+    email,
+  })
+    .then(() => res.json({ success: true }))
+    .catch((error) => res.json({ success: false, error: error }));
+};
+
 exports.deleteUser = async (req, res) => {
   const { id } = req.params;
 
@@ -194,5 +215,6 @@ const sendToken = (user, statusCode, res) => {
   const username = user.username;
   const email = user.email;
   const type = user.type;
-  res.status(200).json({ success: true, token, username, email, type });
+  const id = user._id;
+  res.status(200).json({ success: true, token, username, email, type, id });
 };

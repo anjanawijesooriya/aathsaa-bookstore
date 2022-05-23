@@ -55,6 +55,7 @@ const Login = () => {
       localStorage.setItem("username", data.username);
       localStorage.setItem("email", data.email);
       localStorage.setItem("type", data?.type);
+      localStorage.setItem("id", data.id);
 
       setTimeout(() => {
         // set a 5seconds timeout for authentication

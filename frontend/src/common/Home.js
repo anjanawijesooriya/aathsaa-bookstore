@@ -14,21 +14,31 @@ const Home = () => {
   return (
     <section>
       <Carousel effect="fade" autoplay>
-        <div>
-          <img src={BG1} alt="bg1" />
-        </div>
-        <div>
-          <img src={BG2} alt="bg2" />
-        </div>
-        <div>
-          <img src={BG3} alt="bg3" />
-        </div>
-        <div>
-          <img src={BG4} alt="bg4" />
-        </div>
-        <div>
-          <img src={BG5} alt="bg5" />
-        </div>
+        <center>
+          <div>
+            <img src={BG1} alt="bg1" />
+          </div>
+        </center>
+        <center>
+          <div>
+            <img src={BG2} alt="bg2" />
+          </div>
+        </center>
+        <center>
+          <div>
+            <img src={BG3} alt="bg3" />
+          </div>
+        </center>
+        <center>
+          <div>
+            <img src={BG4} alt="bg4" />
+          </div>
+        </center>
+        <center>
+          <div>
+            <img src={BG5} alt="bg5" />
+          </div>
+        </center>
       </Carousel>
     </section>
   );

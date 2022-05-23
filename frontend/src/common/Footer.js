@@ -5,7 +5,7 @@ const Footer = () => {
   const date = new Date();
 
   return (
-    <footer className="text-white body-font bg-gray-400">
+    <footer className="text-white body-font bg-gray-400 -mt-2">
       <div className="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div className="w-64 flex-shrink-0 md:mx-0 mx-auto text-center md:text-left">
           <div className="font-bold text-2xl cursor-pointer flex items-center font-[Poppins] text-black">

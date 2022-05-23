@@ -22,7 +22,6 @@ const App = () => {
     <div>
       <Router>
         <Routes>
-          <Route path="*" element={<PageNotFound />} />
           <Route path="/" element={[<NavBar />, <Home />, <Footer />]} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
@@ -51,6 +50,7 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </div>

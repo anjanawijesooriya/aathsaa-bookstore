@@ -11,6 +11,9 @@ import Books from "./Books";
 import BooksCategory from "./BooksCategory";
 import ViewBook from "./ViewBook";
 
+//Profile
+import MyProfile from "./MyProfile";
+
 import Logo from "../../assets/LOGO new.png";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -32,7 +35,11 @@ const Dashboard = () => {
   const queryKids = param.get("_optKids");
   const queryShorts = param.get("_optShortS");
 
+  //book view
   const queryViewBook = param.get("_optView");
+
+  //profile
+  const queryProfile = param.get("_optProfile");
 
   const onCollapse = (collapsed) => {
     setCollapsed(collapsed);
@@ -80,6 +87,7 @@ const Dashboard = () => {
     localStorage.removeItem("username");
     localStorage.removeItem("email");
     localStorage.removeItem("type");
+    localStorage.removeItem("id");
     localStorage.setItem("authToken", null);
     history("/login");
     window.location.reload();
@@ -253,7 +261,9 @@ const Dashboard = () => {
               ? "Short Stories"
               : queryViewBook === "book"
               ? "View Book"
-              : "Dashboard"}
+              : queryProfile === "my"
+              ? "My Profile"
+              : "aaThSaa Book-Store"}
           </h1>
         </Header>
 
@@ -272,7 +282,8 @@ const Dashboard = () => {
             !queryALs &&
             !queryKids &&
             !queryShorts &&
-            !queryViewBook }
+            !queryViewBook &&
+            !queryProfile && <Books />}
           {/* Book Category */}
           {queryNovels === "novels" && <BooksCategory />}
           {queryProgramming === "programming" && <BooksCategory />}
@@ -280,7 +291,12 @@ const Dashboard = () => {
           {queryALs === "als" && <BooksCategory />}
           {queryKids === "kids" && <BooksCategory />}
           {queryShorts === "shorts" && <BooksCategory />}
+
+          {/*Book View*/}
           {queryViewBook === "book" && <ViewBook />}
+
+          {/*Profile*/}
+          {queryProfile === "my" && <MyProfile />}
         </Content>
         <Footer style={{ textAlign: "center" }}>
           Copyright © {date.getFullYear()} aaThSaa Book-Store

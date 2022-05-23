@@ -4,6 +4,8 @@ const {
   register,
   login,
   getUsers,
+  getUser,
+  editUser,
   deleteUser,
   forgotpassword,
   resetpassword,
@@ -16,6 +18,10 @@ router.route("/register").post(register); //call the auth in controllers
 router.route("/login").post(login);
 
 router.route("/get").get(getUsers);
+
+router.route("/getUser/:id").get(getUser);
+
+router.route("/update/:id").put(editUser);
 
 router.route("/delete/:id").delete(deleteUser);
 
