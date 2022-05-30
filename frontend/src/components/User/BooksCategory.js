@@ -22,7 +22,7 @@ const BooksCategory = () => {
   useEffect(() => {
     (async () => {
       await axios
-        .get("http://localhost:8070/books/")
+        .get("/books/")
         .then((res) => {
           setData(res.data);
           //   setFilteredDataCategory(res.data);

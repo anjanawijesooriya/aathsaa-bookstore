@@ -1,5 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ArrowUpOutlined } from "@ant-design/icons";
+import { Button } from "antd";
 
 //common
 import Home from "./common/Home";
@@ -18,6 +20,25 @@ import AdminDashboard from "./components/Admin/Dashboard";
 import UserDashboard from "./components/User/Dashboard";
 
 const App = () => {
+  const [showButton, setShowButton] = useState(false);
+
+  useEffect(() => {
+    window.addEventListener("scroll", () => {
+      if (window.pageYOffset > 300) {
+        setShowButton(!showButton);
+      } else {
+        setShowButton(false);
+      }
+    });
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div>
       <Router>
@@ -52,6 +73,19 @@ const App = () => {
           />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+
+        {showButton && (
+          <div className=" fixed bottom-5 right-5 text-3xl p-2 cursor-pointer justify-center items-center">
+            <Button
+              type="primary"
+              size="large"
+              shape="circle"
+              onClick={scrollToTop}
+            >
+              <ArrowUpOutlined />
+            </Button>
+          </div>
+        )}
       </Router>
     </div>
   );

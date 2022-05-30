@@ -18,7 +18,7 @@ const Books = () => {
     }, 5000);
     (async () => {
       await axios
-        .get("http://localhost:8070/books/")
+        .get("/books/")
         .then((res) => {
           setData(res.data);
         })
@@ -29,12 +29,34 @@ const Books = () => {
   return (
     <div>
       <center>
-        <h1 className=" text-3xl text-blue-700">Welcome To aaThSaa Book-Store</h1>
+        <h1 className=" text-3xl text-blue-700">
+          Welcome To aaThSaa Book-Store
+        </h1>
       </center>
       <hr />
+      {/* {localStorage.getItem("username") === null ? (
+        <div className="p-2 float-right">
+          <input
+            style={{ width: "300px", height: "40px" }}
+            type="text"
+            placeholder="search"
+          />{" "}
+          <Button>search</Button>
+          <br />
+          <br />
+        </div>
+      ) : (
+        <></>
+      )} */}
       {loader === false ? (
         <center>
-          <Spin style={{ marginTop: "200px" }} />
+          <Spin
+            style={
+              localStorage.getItem("username") !== null
+                ? { marginTop: "200px" }
+                : { marginTop: "10px" }
+            }
+          />
         </center>
       ) : data.length === 0 ? (
         <center>
@@ -73,19 +95,25 @@ const Books = () => {
                   <p className="mt-1 text-sm text-gray-500">
                     {moment(i.addedDate).format("DD MMM YYYY")}
                   </p>
-                  <Button
-                    type="primary"
-                    shape="round"
-                    onClick={() =>
-                      history(
-                        `/user-dashboard/${localStorage.getItem(
-                          "username"
-                        )}?_optView=book&_id=${i._id}`
-                      )
-                    }
-                  >
-                    View Book
-                  </Button>
+                  {localStorage.getItem("username") !== null ? (
+                    <Button
+                      type="primary"
+                      shape="round"
+                      onClick={() =>
+                        history(
+                          `/user-dashboard/${localStorage.getItem(
+                            "username"
+                          )}?_optView=book&_id=${i._id}`
+                        )
+                      }
+                    >
+                      View Book
+                    </Button>
+                  ) : (
+                    <span style={{ color: "red" }}>
+                      Note: You need to login for view the book👉
+                    </span>
+                  )}
                 </center>
               </div>
             </div>

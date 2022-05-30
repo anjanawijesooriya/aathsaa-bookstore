@@ -1,17 +1,19 @@
 const User = require("../models/auth");
+const Book = require("../models/books");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 
 //when we use asynchronous function we need try catch block
 exports.register = async (req, res) => {
   //controller for register
-  const { username, email, password } = req.body; //destructure method
+  const { username, email, password, userP } = req.body; //destructure method
 
   try {
     const user = await User.create({
       username,
       email,
       password, //this.password filed of user.js in models
+      userP,
     });
     sendToken(user, 200, res);
   } catch (error) {
@@ -72,11 +74,27 @@ exports.getUsers = async (req, res) => {
     .catch((error) => res.status(500).json({ success: false, error: error }));
 };
 
-exports.getUser = async (req, res) => {
+exports.getProfile = async (req, res) => {
   const { id } = req.params;
 
   await User.findById(id)
-    .then((user) => res.json(user))
+    .then((profile) => res.json(profile))
+    .catch((error) => res.status(500).json({ success: false, error: error }));
+};
+
+exports.getUser = async (req, res) => {
+  const { id, bookName } = req.params;
+
+  console.log(bookName);
+
+  let result = "";
+
+  if (bookName) {
+    result = await Book.findOne({ bookName });
+  }
+  await User.findById(id)
+
+    .then((user) => res.json(bookName ? { ...user, likes: result.user } : user))
     .catch((error) => res.status(500).json({ success: false, error: error }));
 };
 

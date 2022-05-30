@@ -2,7 +2,7 @@ const Books = require("../models/books");
 
 //adding books
 exports.createBook = async (req, res) => {
-  const { bookName, author, bookDesc, bookCategory, image, bookUrl } = req.body;
+  const { bookName, author, bookDesc, bookCategory, image, bookUrl , user } = req.body;
 
   const addedDate = Date(req.body.addedDate);
   const likes = Number(req.body.likes) + 1;
@@ -18,6 +18,7 @@ exports.createBook = async (req, res) => {
     addedDate,
     likes,
     downloads,
+    user
   }); //create a new object using database schema
 
   const isAvailable = await Books.findOne({
@@ -92,33 +93,54 @@ exports.updateBooks = async (req, res) => {
 
 //updating like count
 exports.updateLikes = async (req, res) => {
+  console.log(req.body);
   const { id } = req.params;
-  const likes = Number(req.body.likes) + 1;
+  const likes = Number(req.body.likes);
+  const type = req.body.type;
+  const userLikes = req.body.id;
+  console.log(likes);
 
-  const likeCount = { likes };
-
-  await Books.findByIdAndUpdate(id, likeCount)
-    .then(() => {
-      res.status(200).send({ status: "Likes Updated" });
+  if (type === "likes")
+    await Books.findByIdAndUpdate(id, {
+      likes:userLikes.likes ? likes : Number(likes) + 1,
+      user: { likes: Number(userLikes.id) + 1 , email: userLikes.email},
     })
-    .catch((error) => {
-      console.log(error);
-      res
-        .status(500)
-        .send({ status: "Error with updating data", error: error.message });
-    });
+      .then(() => {
+        res.status(200).send({ status: "Likes Updated" });
+      })
+      .catch((error) => {
+        console.log(error);
+        res
+          .status(500)
+          .send({ status: "Error with updating data", error: error.message });
+      });
+  else
+    await Books.findByIdAndUpdate(id, {
+      likes:Number(likes) -1,
+      user: { likes: Number(userLikes.id) , email: userLikes.email},
+    })
+      .then(() => {
+        res.status(200).send({ status: "Likes Updated" });
+      })
+      .catch((error) => {
+        console.log(error);
+        res
+          .status(500)
+          .send({ status: "Error with updating data", error: error.message });
+      });
 };
 
 //updating download count
 exports.updateDownloads = async (req, res) => {
+  console.log(req.body);
   const { id } = req.params;
-  const downloads = Number(req.body.downloads) + 1;
+  const downloads = Number(req.body.downloads);
+  console.log(downloads);
 
-  const downloadCount = { downloads };
-
-  await Books.findByIdAndUpdate(id, downloadCount)
+  await Books.findByIdAndUpdate(id, { downloads })
     .then(() => {
       res.status(200).send({ status: "Downloads Updated" });
+      console.log(res.body);
     })
     .catch((error) => {
       console.log(error);

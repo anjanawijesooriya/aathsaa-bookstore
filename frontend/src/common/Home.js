@@ -10,6 +10,8 @@ import BG3 from "../assets/bg3.jpg";
 import BG4 from "../assets/bg4.jpg";
 import BG5 from "../assets/bg5.jpg";
 
+import Books from "../components/User/Books";
+
 const Home = () => {
   return (
     <section>
@@ -40,6 +42,7 @@ const Home = () => {
           </div>
         </center>
       </Carousel>
+      <Books />
     </section>
   );
 };

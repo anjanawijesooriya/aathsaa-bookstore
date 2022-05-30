@@ -59,7 +59,7 @@ const MyProfile = () => {
     })();
     (async () => {
       await axios
-        .get(`/api/auth/getUser/${localStorage.getItem("id")}`)
+        .get(`/api/auth/getProfile/${localStorage.getItem("id")}`)
         .then((res) => {
           form.setFieldsValue({
             username: res.data.username,
@@ -101,7 +101,7 @@ const MyProfile = () => {
   const deleteHandler = async (id) => {
     setLoading(true);
     try {
-      await axios.delete(`/api/auth/delete/${id}`);
+      await axios.delete(`/api/auth/delete/${localStorage.getItem("id")}`);
       setTimeout(() => {
         setVisible(false);
         setLoading(false);

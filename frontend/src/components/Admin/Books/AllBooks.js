@@ -27,7 +27,7 @@ const AllBooks = () => {
 
   useEffect(() => {
     (async () =>
-      await axios.get("http://localhost:8070/books/").then((res) => {
+      await axios.get("/books/").then((res) => {
         setData(res.data);
         setLoader(!loader);
         console.log(res);
@@ -45,7 +45,7 @@ const AllBooks = () => {
   const deleteHandler = async (id) => {
     setLoading(true);
     try {
-      await axios.delete(`http://localhost:8070/books/delete/${id}`);
+      await axios.delete(`/books/delete/${id}`);
       setTimeout(() => {
         setVisible(false);
         setLoading(false);
@@ -56,7 +56,7 @@ const AllBooks = () => {
         });
       }, 3000);
       await axios
-        .get("http://localhost:8070/books/")
+        .get("/books/")
         .then((res) => {
           setTimeout(() => {
             setData(res.data);

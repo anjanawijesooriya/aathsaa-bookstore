@@ -45,6 +45,7 @@ const AddBooks = () => {
   const [bookUrl, setBookUrl] = useState("");
   const likes = -1;
   const downloads = -1;
+  const user = { likes: 0, email: "" };
 
   //additional
   const [loading, setLoading] = useState(false);
@@ -81,6 +82,7 @@ const AddBooks = () => {
           bookUrl,
           likes,
           downloads,
+          user,
         },
         config
       );

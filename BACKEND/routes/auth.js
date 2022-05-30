@@ -4,6 +4,7 @@ const {
   register,
   login,
   getUsers,
+  getProfile,
   getUser,
   editUser,
   deleteUser,
@@ -19,7 +20,9 @@ router.route("/login").post(login);
 
 router.route("/get").get(getUsers);
 
-router.route("/getUser/:id").get(getUser);
+router.route("/getProfile/:id").get(getProfile);
+
+router.route("/getUser/:id/:bookName").get(getUser);
 
 router.route("/update/:id").put(editUser);
 

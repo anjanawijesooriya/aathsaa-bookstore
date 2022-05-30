@@ -5,7 +5,7 @@ import "antd/dist/antd.css";
 import {
   DownloadOutlined,
   LikeOutlined,
-  DislikeOutlined,
+  LikeFilled,
   CommentOutlined,
   LoadingOutlined,
 } from "@ant-design/icons";
@@ -24,12 +24,17 @@ import {
 const ViewBook = () => {
   const [data, setData] = useState([]);
   const [cData, setCData] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [loader, setLoader] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [visible, setVisible] = useState(false);
   const [eVisible, setEVisible] = useState(false);
   const [spin, setSpin] = useState(false);
+  const [action, setAction] = useState(true);
+  const [downloads, setDownloads] = useState(0);
+  const [likes, setLikes] = useState(0);
+  const [msg, setMsg] = useState(false);
 
   const user = localStorage.getItem("username");
   const bookName = data.bookName;
@@ -42,35 +47,134 @@ const ViewBook = () => {
   const id = param.get("_id");
 
   useEffect(() => {
-    setTimeout(() => {
-      setLoader(!loader);
-    }, 5000);
-    (async () => {
-      await axios
-        .get(`/books/get/${id}`)
-        .then((res) => {
-          setData(res.data);
-        })
-        .catch(() => null);
-    })();
-    (async () => {
-      await axios
-        .get("/comments/")
-        .then((res) => setCData(res.data))
-        .catch(() => null);
-    })();
-    (async () => {
-      await axios
-        .get(`/comments/get/${id}`)
-        .then((res) => {
-          form.setFieldsValue({
-            comment: res.data.comment,
-          });
-          setComment(res.data.comment);
-        })
-        .catch(() => null);
-    })();
-  }, []);
+    if (downloads || likes) {
+      (async () => {
+        await axios
+          .get(`/books/get/${id}`)
+          .then(async (res) => {
+            setData(res.data);
+            const bookName = res.data.bookName;
+            await axios
+              .get(
+                `/api/auth/getUser/${localStorage.getItem("id")}/${bookName}`
+              )
+              .then((res) => {
+                setUserData(res.data);
+                console.log(res.data);
+              })
+              .catch(() => null);
+          })
+          .catch(() => null);
+      })();
+      (async () => {
+        await axios
+          .get("/comments/")
+          .then((res) => setCData(res.data))
+          .catch(() => null);
+      })();
+      (async () => {
+        await axios
+          .get(`/comments/get/${id}`)
+          .then((res) => {
+            form.setFieldsValue({
+              comment: res.data.comment,
+            });
+            setComment(res.data.comment);
+          })
+          .catch(() => null);
+      })();
+    } else if (action) {
+      setTimeout(() => {
+        setLoader(true);
+      }, 5000);
+      (async () => {
+        await axios
+          .get(`/books/get/${id}`)
+          .then(async (res) => {
+            setData(res.data);
+            const bookName = res.data.bookName;
+            await axios
+              .get(
+                `/api/auth/getUser/${localStorage.getItem("id")}/${bookName}`
+              )
+              .then((res) => {
+                setUserData(res.data);
+                console.log(res.data);
+              })
+              .catch(() => null);
+          })
+          .catch(() => null);
+      })();
+      (async () => {
+        await axios
+          .get("/comments/")
+          .then((res) => setCData(res.data))
+          .catch(() => null);
+      })();
+
+      (async () => {
+        await axios
+          .get(`/comments/get/${id}`)
+          .then((res) => {
+            form.setFieldsValue({
+              comment: res.data.comment,
+            });
+            setComment(res.data.comment);
+          })
+          .catch(() => null);
+      })();
+    } else {
+      setTimeout(() => {
+        setLoader(true);
+      }, 5000);
+      (async () => {
+        await axios
+          .get(`/books/get/${id}`)
+          .then(async (res) => {
+            setData(res.data);
+            const bookName = res.data.bookName;
+            await axios
+              .get(
+                `/api/auth/getUser/${localStorage.getItem("id")}/${bookName}`
+              )
+              .then((res) => {
+                setUserData(res.data);
+                console.log(res.data);
+              })
+              .catch(() => null);
+          })
+          .catch(() => null);
+      })();
+      (async () => {
+        await axios
+          .get("/comments/")
+          .then((res) => setCData(res.data))
+          .catch(() => null);
+      })();
+
+      (async () => {
+        await axios
+          .get(`/comments/get/${id}`)
+          .then((res) => {
+            form.setFieldsValue({
+              comment: res.data.comment,
+            });
+            setComment(res.data.comment);
+          })
+          .catch(() => null);
+      })();
+      // (async () => {
+      //   const bookName = data?.bookName
+      //   await axios
+      //     .get(`/api/auth/getUser/${localStorage.getItem("id")}` , {bookName})
+      //     .then((res) => {
+      //       setUserData(res.data);
+      //       console.log(res.data);
+      //     })
+      //     .catch(() => null);
+      // })();
+    }
+  }, [downloads, likes, data?.bookName, action]);
 
   const commentHandler = async () => {
     // create handler for saving data to the db
@@ -126,7 +230,7 @@ const ViewBook = () => {
   const [form] = Form.useForm();
   const { TextArea } = Input;
 
-  const filteredData = cData.filter((el) => el.bookName === data.bookName);
+  const filteredData = cData.filter((el) => el.bookName === bookName);
 
   const showModal = (type) => {
     switch (type) {
@@ -213,6 +317,69 @@ const ViewBook = () => {
     }
   };
 
+  const downloadHandler = async () => {
+    try {
+      const type = "downloads";
+      const downloads = Number(data.downloads) + 1;
+      setDownloads(downloads);
+      console.log(downloads);
+      await axios.put(`/books/downloads/${id}`, { type, downloads });
+      setAction("downloaded");
+      setData(data);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  console.log(data.downloads);
+  const user1 = { likes: 0, name: "" };
+
+  const likeHandler = async () => {
+    setAction(!action);
+    const type = action ? "likes" : "unlikes";
+    console.log("dasdasssss", type);
+    const likes = Number(data.likes);
+    try {
+      if (
+        userData.likes.likes &&
+        userData.likes.email === localStorage.getItem("email")
+      )
+        alert("fdfhdsg");
+
+      if (type === "likes") {
+        if (!userData.likes.likes) {
+          alert("huththa");
+          await axios.put(`/books/likes/${id}`, {
+            type,
+            likes: userData.likes.likes ? Number(likes) + 1 : likes,
+            id: {
+              id: userData.likes.likes,
+              email: localStorage.getItem("email"),
+            },
+          });
+        }
+      }
+      if (type === "unlikes") {
+        if (userData.likes.likes) {
+          alert("Wesi");
+          await axios.put(`/books/likes/${id}`, {
+            type,
+            likes,
+            id: {
+              id: 0,
+              email: localStorage.getItem("email"),
+            },
+          });
+        }
+      }
+      setMsg(!msg);
+      setData(data);
+      setTimeout(() => setMsg(false), 3000);
+    } catch (error) {
+      alert(error);
+    }
+  };
+  console.log(data.likes);
+
   return (
     <div>
       {loader === false ? (
@@ -240,7 +407,8 @@ const ViewBook = () => {
                     <span className="flex items-center">
                       <DownloadOutlined />
                       <span className="text-gray-600 ml-3">
-                        {data.downloads} Downloads
+                        {data.downloads}{" "}
+                        {data.downloads === 1 ? "Download" : "Downloads"}
                       </span>
                     </span>
                     <span className="flex ml-3 pl-3 py-2 border-l-2 border-gray-200 space-x-2s">
@@ -296,25 +464,35 @@ const ViewBook = () => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex">
+                  <div className="flex mt-5">
                     <span className="title-font font-medium text-2xl text-gray-900">
                       <a href={data.bookUrl} target="_blank">
-                        <Button type="primary" size="large" shape="round">
+                        <Button
+                          type={action === "downloaded" ? "text" : "primary"}
+                          size="large"
+                          shape="round"
+                          onClick={downloadHandler}
+                          disabled={action === "downloaded"}
+                        >
                           <DownloadOutlined />
-                          Download
+                          {action === "downloaded"
+                            ? "Already Downloaded"
+                            : "Download"}
                         </Button>
                       </a>
                     </span>
-                    <div className="rounded-full w-10 h-10 p-0 justify-between border-0 inline-flex items-center gap-2 text-gray-500 ml-4">
-                      <Button shape="circle">
-                        <LikeOutlined />
+                    {/* <div className="rounded-full w-10 h-10 p-0 justify-between border-0 inline-flex items-center gap-2 text-gray-500 ml-4">
+                      <Button shape="circle" onClick={likeHandler}>
+                        {action === true ? <LikeOutlined /> : <LikeFilled />}
                       </Button>
-                      <Button shape="circle">
-                        <DislikeOutlined />
-                      </Button>
-                      <span>{data.likes}</span> Likes
-                    </div>
+                      <span>{data.likes}</span>{" "}
+                      {data.likes === 1 ? "Like" : "Likes"}
+                    </div> */}
                   </div>
+                  <br />
+                  <span style={{ color: "blue" }}>
+                    {msg && `You liked ${data.bookName}`}
+                  </span>
                 </div>
               </div>
             </div>
@@ -350,12 +528,12 @@ const ViewBook = () => {
                     />
                     {item.user === localStorage.getItem("username") ? (
                       <div className=" -mt-10 float-right">
-                        <Button
+                        {/* <Button
                           type="primary"
                           onClick={() => showModal("edit")}
                         >
                           Edit
-                        </Button>{" "}
+                        </Button>{" "} */}
                         <Button
                           type="danger"
                           onClick={() => showModal("delete")}
@@ -432,7 +610,7 @@ const ViewBook = () => {
                       "Yes"
                     )}
                   </Button>{" "}
-                  <Button type="danger">No</Button>
+                  <Button type="default" onClick={handleCancel}>No</Button>
                 </>
               ) : (
                 <Form form={form} name="control-hooks">

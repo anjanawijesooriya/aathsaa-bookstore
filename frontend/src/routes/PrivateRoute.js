@@ -14,7 +14,7 @@ function PrivateRoute({ children }) {
   if (localStorage.getItem("authToken") === "null") {
     return loader ? (
       <center>
-        <div className=" my-56">
+        <div className=" my-64">
           <h1 style={{ color: "red" }}>UnAutharized Access!!! ❌</h1>
           <p>Rolling back to the Login... 👉</p>
           <Spin size="large" />

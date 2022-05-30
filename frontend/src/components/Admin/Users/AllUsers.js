@@ -22,7 +22,7 @@ const AllUsers = () => {
 
   useEffect(() => {
     (async () =>
-      await axios.get("http://localhost:8070/api/auth/get").then((res) => {
+      await axios.get("/api/auth/get").then((res) => {
         setData(res.data);
       }))();
   }, []);
@@ -38,7 +38,7 @@ const AllUsers = () => {
   const deleteHandler = async (id) => {
     setLoading(!loading);
     try {
-      await axios.delete(`http://localhost:8070/api/auth/delete/${id}`);
+      await axios.delete(`/api/auth/delete/${id}`);
       setTimeout(() => {
         setVisible(false);
         setLoading(false);
@@ -49,7 +49,7 @@ const AllUsers = () => {
         });
       }, 3000);
       await axios
-        .get("http://localhost:8070/api/auth/get")
+        .get("/api/auth/get")
         .then((res) => {
           setTimeout(() => {
             setData(res.data);

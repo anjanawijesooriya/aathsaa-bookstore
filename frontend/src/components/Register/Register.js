@@ -9,6 +9,7 @@ import {
   Divider,
   Checkbox,
   Spin,
+  notification,
 } from "antd";
 import "./Register.scss";
 import Logo from "../../assets/LOGO new.png";
@@ -31,6 +32,8 @@ const Register = () => {
   const [available, setAvailable] = useState("");
   const [loading, setLoading] = useState(false); //additional
   const [isError, setIsError] = useState(false);
+
+  const userP = { likes: 0, email: "" };
 
   const history = useNavigate();
 
@@ -62,7 +65,7 @@ const Register = () => {
     try {
       const { data } = await axios.post(
         "/api/auth/register",
-        { username, password, email },
+        { username, password, email, userP },
         config
       );
 
@@ -72,6 +75,11 @@ const Register = () => {
 
       setTimeout(() => {
         // set a 5seconds timeout for authentication
+        notification.info({
+          message: `Notification`,
+          description: "Successfully created your profile 😘",
+          placement: "top",
+        });
         history("/login");
       }, 5000);
     } catch (error) {
